@@ -48,12 +48,12 @@ Article.loadAll = function(rawData) {
 // This function will retrieve the data from either a local or remote source,
 // and process it, then hand off control to the View.
 Article.fetchAll = function() {
-  if (localStorage.rawData) {
+  if (localStorage.jsonData) {
     console.log('loaded from localStorage');
     // When rawData is already in localStorage,
     // we can load it with the .loadAll function above,
     // and then render the index page (using the proper method on the articleView object).
-    Article.loadAll(); //TODO: What do we pass in to loadAll()?
+    Article.loadAll(JSON.parse(localStorage.jsonData)); //DONE: What do we pass in to loadAll()?
     //DONE: What method do we call to render the index page?
     articleView.initIndexPage();
   } else {
@@ -61,6 +61,7 @@ Article.fetchAll = function() {
       localStorage.setItem('jsonData', JSON.stringify(data));
       Article.loadAll(data);
       articleView.initIndexPage();
+      console.log('loaded from JSON');
     });
     // DONE: When we don't already have the rawData,
     // we need to retrieve the JSON file from the server with AJAX (which jQuery method is best for this?),
